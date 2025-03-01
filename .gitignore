@@ -1,0 +1,19 @@
+# Ignore Mac system files
+.DS_Store
+
+# Ignore node_modules
+node_modules/
+
+# Ignore Python virtual environments
+venv/
+__pycache__/
+
+# Ignore Go build files
+go-server/cmd/main
+
+# Ignore environment variables file
+.env
+
+# Ignore Docker data volumes
+volumes/
+db

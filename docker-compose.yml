@@ -1,0 +1,70 @@
+services:
+  postgres:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "6060:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "6061:8080"
+
+  go-server:
+    build:
+      context: ./go-server
+      dockerfile: Dockerfile
+    container_name: go-server
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "6062:8081"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+
+  python-llm:
+    build:
+      context: ./python-llm
+      dockerfile: Dockerfile
+    container_name: python-llm
+    depends_on:
+      go-server:
+        condition: service_healthy
+    ports:
+      - "6063:8000"
+
+  python-tts:
+    build:
+      context: ./python-tts
+      dockerfile: Dockerfile
+    container_name: python-tts
+    depends_on:
+      go-server:
+        condition: service_healthy
+    ports:
+      - "6064:8001"
+
+volumes:
+  postgres_data:

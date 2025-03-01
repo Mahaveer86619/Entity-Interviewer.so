@@ -1,0 +1,9 @@
+{{ define "content" }}
+<div class="admin-container">
+    <h2>Admin Dashboard</h2>
+    <p><strong>Database Status:</strong> {{ .DBStatus }}</p>
+    <p><strong>Server Uptime:</strong> {{ .Uptime }}</p>
+    <p><strong>Server Start Time:</strong> {{ .ServerStartTime }}</p>
+    <p><strong>Adminer:</strong> <a href="{{ .AdminerLink }}" target="_blank">{{ .AdminerLink }}</a></p>
+</div>
+{{ end }}
