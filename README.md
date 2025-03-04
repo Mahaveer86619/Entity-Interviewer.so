@@ -188,4 +188,8 @@ Interviewer.so/
 1. navigate to the python services directory
 2. create a virtual enviroment.
 3. install the requirements.txt with pip install -r requirements.txt
+<<<<<<< HEAD
 4. run the main.py file.
+=======
+4. run the main.py file.
+>>>>>>> 1adc1c4bc7640a80a4f0c230316260cbb52d3983
