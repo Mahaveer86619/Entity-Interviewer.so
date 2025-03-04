@@ -3,7 +3,6 @@ package main
 import (
     "log"
     "net/http"
-    
     "github.com/gorilla/mux"
     "github.com/Mahaveer86619/Entity-Interviewer.so/go-admin/internal/handlers"
 )

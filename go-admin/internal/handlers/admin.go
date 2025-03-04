@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
-	"github.com/gorilla/websocket"
-	"github.com/shirou/gopsutil/cpu"
-	"github.com/shirou/gopsutil/mem"
+	"github.com/shirou/gopsutil/v4/mem"
+	"github.com/shirou/gopsutil/v4/cpu"
 )
 
 var startTime = time.Now()
@@ -21,22 +21,16 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	ws, err := websocket.Upgrade(w, r, nil, 1024, 1024)
-	if err != nil {
-		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
+	uptime := time.Since(startTime).Seconds()
+	v, _ := mem.VirtualMemory()
+	c, _ := cpu.Percent(0, false)
+
+	data := map[string]interface{}{
+		"uptime": uptime,
+		"cpu":    c[0],
+		"ram":    v.UsedPercent,
 	}
-	go func(ws *websocket.Conn) {
-		for {
-			uptime := time.Since(startTime).Seconds()
-			v, _ := mem.VirtualMemory()
-			c, _ := cpu.Percent(0, false)
-			data := map[string]interface{}{
-				"uptime": uptime,
-				"cpu":    c[0],
-				"ram":    v.UsedPercent,
-			}
-			ws.WriteJSON(data)
-			time.Sleep(2 * time.Second)
-		}
-	}(ws)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
 }

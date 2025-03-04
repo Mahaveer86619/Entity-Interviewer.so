@@ -73,11 +73,14 @@
             ramChart.update();
             document.getElementById('uptime').textContent = `Uptime: ${Math.round(uptime)} seconds`;
         };
-        const ws = new WebSocket(`ws://${window.location.host}/admin/health`);
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            updateCharts(data.uptime, data.cpu, data.ram);
+        const fetchData = () => {
+            fetch('/admin/health')
+                .then(response => response.json())
+                .then(data => {
+                    updateCharts(data.uptime, data.cpu, data.ram);
+                });
         };
+        setInterval(fetchData, 2000);
     </script>
 </body>
 </html>
