@@ -1,98 +1,73 @@
 # Entity Interviewer.so
 
----
+Entity Interviewer.so is a streamlined web application that generates personalized interview questions from job descriptions and provides real-time Text-to-Speech (TTS) conversion. It utilizes minimal Go packages and HTMX for dynamic UI interactions, along with a reusable admin microservice for monitoring and dashboarding.
 
-🚀 **Description:**
+## Key Technologies
 
-Build a dynamic web application that generates personalized interview questions from job descriptions and provides real-time Text-to-Speech (TTS) conversion. Empower users with an interactive interview preparation tool.
+-   **Backend Logic:** Go (Golang) with the standard library (net/http) and HTMX for server-side rendering.
+-   **Dynamic UI:** HTMX for AJAX-driven UI interactions.
+-   **Database:** PostgreSQL for robust relational data storage.
+-   **Microservices:** Python (FastAPI) for specialized NLP and TTS tasks.
+-   **NLP Pipelines:** Hugging Face Transformers for text processing.
+-   **Question Generation:** Language Learning Models (LLMs) for contextual question generation.
+-   **TTS Conversion:** F5 TTS for high-quality audio output.
+-   **Containerization:** Docker for consistent deployments.
+-   **Database Management:** Adminer for PostgreSQL.
 
----
+## Key Features
 
-🛠️ **Key Technologies:**
+-   **Interview Question Generation:** Generate job-specific interview questions from user input.
+-   **Real-time TTS Conversion:** Convert generated questions to speech in real-time.
+-   **Secure Authentication:** Implement secure user authentication and session management.
+-   **Dynamic UI:** Provide a dynamic, interactive, and responsive user interface using HTMX.
+-   **Scalable Architecture:** Design a scalable and efficient microservices architecture.
+-   **Database Management:** Use Adminer for database management and inspection.
+-   **Reusable Admin Service:** Develop a reusable admin microservice for health checks and dashboarding.
 
-- **Go (Golang):** ⚙️ Robust backend and efficient frontend logic.
-- **HTMX:** ⚡ Dynamic, AJAX-driven UI interactions.
-- **Gin:** 🌐 High-performance web framework for API and routing.
-- **Templ:** 📄 Compile-time checked HTML templates for server-side rendering.
-- **Tailwind CSS:** 🎨 Utility-first CSS for rapid UI development.
-- **PocketBase:** 📦 All-in-one backend with database and authentication.
-- **Python (FastAPI):** 🐍 Microservices for specialized NLP and TTS tasks.
-- **Hugging Face Transformers:** 🤖 NLP pipelines for text processing.
-- **Language Learning Models (LLMs):** 🧠 Contextual question generation.
-- **F5 TTS:** 🗣️ High-quality text-to-speech conversion.
-- **Docker:** 🐳 Containerization for consistent deployments.
+## Development Steps
 
----
+1.  **PostgreSQL Setup:** Set up PostgreSQL for data storage and define database tables.
+2.  **Python Microservices:** Build FastAPI microservices for NLP and TTS tasks.
+    -   Integrate Hugging Face Transformers for text processing.
+    -   Implement LLM-based question generation.
+    -   Integrate F5 TTS for audio output.
+3.  **Go Backend Development:** Develop the Go backend using `net/http` and HTMX.
+    -   Implement database connections and API endpoints.
+4.  **Frontend Development:** Design the UI with HTMX for dynamic interactions.
+    -   Implement input forms and audio playback for TTS output.
+5.  **Dockerization:** Containerize each microservice using Docker.
+    -   Use Docker Compose to orchestrate services.
+6.  **Testing and Deployment:** Write unit and integration tests, then deploy on a cloud platform.
+7.  **Adminer Integration:** Integrate Adminer for database management.
+8.  **Admin Service Development:** Build a reusable Go admin service.
 
-🌟 **Key Features:**
+## Security Considerations
 
-- 📝 Generate job-specific interview questions from user input.
-- 🗣️ Real-time TTS conversion of generated questions.
-- 🔐 Secure user authentication and session management.
-- 📱 Dynamic, interactive, and responsive user interface.
-- 🚀 Scalable and efficient microservices architecture.
+-   **Input Validation:** Implement rigorous input validation to prevent injection attacks.
+-   **JWT Tokens:** Use JWT tokens for secure authentication and authorization.
 
----
+## Microservice Descriptions
 
-🚧 **Development Steps:**
+-   `go-server`: Go backend application.
+-   `python-llm`: Python microservice for LLM-based question generation.
+-   `python-tts`: Python microservice for TTS conversion.
+-   `postgres`: PostgreSQL database service.
+-   `adminer`: Database management tool.
+-   `go-admin`: Reusable Go admin service.
 
-1. **PocketBase Integration:**
-    - 📦 Set up PocketBase for backend services.
-    - 📊 Define database collections and API rules.
-    - 🔑 Implement user authentication.
-2. **Python Microservices:**
-    - 🐍 Build FastAPI microservices for NLP and TTS.
-    - 🤖 Integrate Hugging Face Transformers for text processing.
-    - 🧠 Implement LLM-based question generation.
-    - 🗣️ Integrate F5 TTS for high fidelity audio output.
-3. **Go Backend Development:**
-    - 🌐 Develop Gin-based backend for API and routing.
-    - 📦 Utilize PocketBase Go SDK for backend interactions.
-    - 🔗 Create API endpoints for question generation and TTS services.
-4. **Frontend Development:**
-    - 🎨 Design UI with HTMX, Templ, and Tailwind CSS.
-    - 📝 Implement input forms for job descriptions.
-    - 🔊 Integrate audio playback for TTS output.
-    - 📄 Structure UI using Templ components.
-5. **Dockerization:**
-    - 🐳 Containerize each microservice using Docker.
-    - 📝 Create Dockerfiles for each service.
-    - 🏗️ Use Docker Compose to orchestrate microservices.
-6. **Testing and Deployment:**
-    - 🧪 Write unit and integration tests.
-    - 🚀 Deploy the application on a cloud platform.
+## Docker Compose Services
 
----
+-   `go-server`
+-   `python-llm`
+-   `python-tts`
+-   `postgres`
+-   `adminer`
+-   `go-admin`
 
-🔒 **Security Considerations:**
-
-- **Input Validation:** 🛡️ Implement rigorous input validation on both the frontend and backend to prevent injection attacks and ensure data integrity.
-- **JWT Token:** 🔑 Employ JWT tokens for secure authentication and authorization, ensuring that only authenticated users can access protected resources.
-
----
-
-📦 **Microservice Descriptions:**
-
-- **go-server:** ⚙️ Go backend with Gin for API and routing.
-- **python-llm:** 🧠 Python microservice for LLM-based question generation.
-- **python-tts:** 🗣️ Python microservice for F5 TTS conversion.
-- **adminer:** 📊 Database management tool for PocketBase.
-
----
-
-🐳 **Docker Compose Services:**
-
-- go-server
-- python-llm
-- python-tts
-- adminer
-
----
-
-📂 **Project File Structure and Explanation:**
+## Project File Structure
 
 ```
-interview-generator/
+Interviewer.so/
 ├── go-server/             # Go backend application
 │   ├── cmd/
 │   │   └── main.go       # Entry point for the Go application
@@ -109,11 +84,10 @@ interview-generator/
 │   │   │   └── config.go
 │   │   └── middleware/   # Middleware functions
 │   │       └── auth.go
-│   ├── views/            # HTML templates
-│   │   ├── base.templ
-│   │   ├── index.templ
+│   ├── static/           # Static files (HTML, CSS, JS)
+│   │   ├── index.html    # Main HTML page
 │   │   └── ...
-│   ├── go.mod  
+│   ├── go.mod
 │   ├── go.sum
 │   └── Dockerfile
 ├── python-llm/             # Python LLM microservice
@@ -128,37 +102,90 @@ interview-generator/
 │   │   └── models.py     # Pydantic models
 │   ├── requirements.txt
 │   └── Dockerfile
+├── go-admin/              # Reusable Go Admin Service
+│   ├── cmd/
+│   │   └── main.go       # Entry point for the Admin Service
+│   ├── internal/
+│   │   ├── handlers/     # HTTP handlers for registration and dashboard
+│   │   │   ├── admin.go
+│   │   ├── services/     # Health check and data management services
+│   │   │   ├── health_check.go
+│   │   │   ├── data_service.go
+│   │   ├── models/       # Data models
+│   │   │   └── models.go
+│   ├── static/           # Static files for the admin dashboard
+│   │   ├── dashboard.html
+│   │   └── ...
+│   ├── go.mod
+│   ├── go.sum
+│   └── Dockerfile
 ├── docker-compose.yml     # Docker Compose configuration
 └── .env                  # Environment variables
 ```
 
-**Explanation:**
+## How to Contribute and Use It Yourself
 
-- **`go-server/`**:
-    - Contains the Go backend application.
-    - `cmd/main.go`: The application's entry point.
-    - `internal/`: Contains the application's internal logic.
-        - `handlers/`: Handles HTTP requests and responses.
-        - `services/`: Encapsulates business logic.
-        - `models/`: Defines data models.
-        - `config/`: Manages configuration settings.
-        - `middleware/`: Handles middleware functions, including authentication.
-    - `views/`: Stores HTML templates using Templ.
-    - `go.mod` and `go.sum`: Go module files for dependency management.
-    - `Dockerfile`: Dockerfile for containerizing the Go application.
-- **`python-llm/`**:
-    - Contains the Python LLM microservice.
-    - `app/main.py`: The FastAPI application.
-    - `app/models.py`: Pydantic models for request and response data.
-    - `requirements.txt`: Python dependencies.
-    - `Dockerfile`: Dockerfile for containerizing the Python LLM microservice.
-- **`python-tts/`**:
-    - Contains the Python TTS microservice.
-    - `app/main.py`: The FastAPI application.
-    - `app/models.py`: Pydantic models for request and response data.
-    - `requirements.txt`: Python dependencies.
-    - `Dockerfile`: Dockerfile for containerizing the Python TTS microservice.
-- **`docker-compose.yml`**:
-    - Defines the Docker Compose configuration for orchestrating the microservices.
-- **.env**:
-    - Stores environment variables, such as database credentials and API keys.
+**Prerequisites:**
+
+-   Docker and Docker Compose
+-   Go (Golang)
+-   Python 3.x
+-   PostgreSQL
+
+**Setup:**
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone [repository URL]
+    cd Interviewer.so
+    ```
+
+2.  **Set up environment variables:**
+
+    -   Create a `.env` file in the root directory.
+    -   Add necessary environment variables (e.g., database connection strings, API keys).
+
+3.  **Start the services using Docker Compose:**
+
+    ```bash
+    docker-compose up --build
+    ```
+
+4.  **Access the application:**
+
+    -   Open your web browser and navigate to `http://localhost:[port]` (depending on your Go server configuration).
+    -   Access Adminer via `http://localhost:[adminer port]`.
+    -   Access the admin panel via `http://localhost:[go-admin port]`
+
+**Contribution Guidelines:**
+
+1.  **Fork the repository:** Create your own fork of the project.
+2.  **Create a branch:** Create a new branch for your feature or bug fix.
+3.  **Make your changes:** Implement your changes and ensure they are well-documented.
+4.  **Test your changes:** Write unit and integration tests to verify your changes.
+5.  **Commit your changes:** Commit your changes with clear and concise commit messages.
+6.  **Push your changes:** Push your changes to your fork.
+7.  **Create a pull request:** Submit a pull request to the main repository.
+
+**Running the Go Services Locally (Without Docker):**
+
+1.  **Navigate to the Go server directory:**
+
+    ```bash
+    cd go-server/cmd
+    ```
+
+2.  **Run the Go server:**
+
+    ```bash
+    go run main.go
+    ```
+
+3.  Repeat steps for the go-admin service.
+**Running the python services locally(without docker):**
+
+1. navigate to the python services directory
+2. create a virtual enviroment.
+3. install the requirements.txt with pip install -r requirements.txt
+4. run the main.py file.

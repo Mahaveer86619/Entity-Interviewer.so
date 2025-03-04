@@ -1,21 +1,20 @@
 services:
   postgres:
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+    image: postgres:latest
     container_name: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "6060:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
       retries: 5
 
   adminer:
@@ -32,39 +31,52 @@ services:
       context: ./go-server
       dockerfile: Dockerfile
     container_name: go-server
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+      PORT: "6062"
+    ports:
+      - "6062:6062"
     depends_on:
       postgres:
         condition: service_healthy
-    ports:
-      - "6062:8081"
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USER=${POSTGRES_USER}
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
-      - DB_NAME=${POSTGRES_DB}
+    volumes:
+      - ./go-server/views:/app/views
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   python-llm:
     build:
       context: ./python-llm
       dockerfile: Dockerfile
     container_name: python-llm
-    depends_on:
-      go-server:
-        condition: service_healthy
     ports:
       - "6063:8000"
+    environment:
+      API_HOST: "http://go-server:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      go-server:
+        condition: service_healthy
 
   python-tts:
     build:
       context: ./python-tts
       dockerfile: Dockerfile
     container_name: python-tts
-    depends_on:
-      go-server:
-        condition: service_healthy
     ports:
       - "6064:8001"
+    environment:
+      API_HOST: "http://go-server:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      go-server:
+        condition: service_healthy
 
 volumes:
   postgres_data:

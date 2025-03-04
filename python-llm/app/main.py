@@ -1,6 +1,8 @@
 from fastapi import FastAPI
+import os
 
 app = FastAPI()
+api_host = os.getenv("API_HOST", "http://localhost:8081")
 
 @app.get("/")
 def read_root():
